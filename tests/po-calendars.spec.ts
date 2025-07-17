@@ -1,15 +1,14 @@
 import {test, expect} from '@playwright/test'
-import {HomePage} from '../page-objects/homePage'
-import { CalendarsPage } from '../page-objects/calendarsPage'
+import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Calendars page', () => {
   test.beforeEach(async({page}) => {
-    const homePage = new HomePage(page)
-    await homePage.goToCalendarsPage()
+    const pm = new PageManager(page)
+    await pm.onHomePage().goToCalendarsPage()
   })
 
   test('Selected Calendar Dates', async({page}) => {
-    const calendarsPage = new CalendarsPage(page)
-    await calendarsPage.checkSelectedCalendarDates()
+    const pm = new PageManager(page)
+    await pm.onCalendarPage().checkSelectedCalendarDates()
   })
 })

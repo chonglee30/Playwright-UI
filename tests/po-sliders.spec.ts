@@ -1,15 +1,14 @@
 import {test, expect} from '@playwright/test'
-import {HomePage} from '../page-objects/homePage'
-import { SlidersPage } from '../page-objects/slidersPage'
+import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Sliders page', () => {
   test.beforeEach(async({page}) => {
-    const homePage = new HomePage(page)
-    await homePage.goToSlidersPage()
+    const pm = new PageManager(page)
+    await pm.onHomePage().goToSlidersPage()
   })
 
   test('Sliders Test', async({page}) => {
-    const slidersPage = new SlidersPage(page)
-    await slidersPage.checkSliderHorizontalDirection(500, '25', '40')
+    const pm = new PageManager(page)
+    await pm.onSlidersPage().checkSliderHorizontalDirection(500, '25', '40')
   })
 })

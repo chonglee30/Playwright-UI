@@ -1,20 +1,19 @@
 import {test, expect} from '@playwright/test'
-import {HomePage} from '../page-objects/homePage'
-import { TablesPage } from '../page-objects/tablesPage'
+import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Tables page', () => {
   test.beforeEach(async({page}) => {
-    const homePage = new HomePage(page)
-    await homePage.goToTablesPage();
+    const pm = new PageManager(page)
+    pm.onHomePage().goToTablesPage()
   })
 
   test('Sortable Table Search Test', async({page}) => {
-    const tablesPage = new TablesPage(page)
-    await tablesPage.checkSortableTableSearch('Italy', 1)
+    const pm = new PageManager(page)
+    await pm.onTablesPage().checkSortableTableSearch('Italy', 1)
   })
 
   test('Sortable Table Pagination and Sorting Test', async({page}) => {
-    const tablesPage = new TablesPage(page)
-    await tablesPage.checkPaginationSortingTable(25)
+    const pm = new PageManager(page)
+    await pm.onTablesPage().checkPaginationSortingTable(25)
   })
 })
