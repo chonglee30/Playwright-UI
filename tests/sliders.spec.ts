@@ -30,16 +30,16 @@ test.describe('Sliders page', () => {
     expect(await sliderValue.textContent()).toEqual('25')
 
     const box = await sliderBox.boundingBox()
-    const x = box.x
-    const y = box.y
-    const height = box.height
-    const width = box.width
+    const x = box!.x
+    const y = box!.y
+    const height = box!.height
+    const width = box!.width
     
     await page.mouse.move(x,y) 
     await page.mouse.down()
     await page.mouse.move(x+500,0)
     await page.mouse.up()
-    
+
     expect(await sliderValue.textContent()).toEqual('40')
     expect(await sliderValue.textContent()).not.toEqual('25')
   });

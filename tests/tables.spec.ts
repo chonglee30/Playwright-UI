@@ -13,7 +13,7 @@ test.beforeEach(async({page}) => {
 })
 
 
-test.describe('Sliders page', () => {
+test.describe('Tables page', () => {
   test.beforeEach(async({page}) => {
     await page.getByRole('link', { name: 'Tables' }).click()
     await page.waitForURL('**/tables/')
