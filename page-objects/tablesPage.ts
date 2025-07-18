@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { PageBase } from "./pageBase"
 
-export class TablesPage {
-  private readonly page:Page 
+export class TablesPage extends PageBase {
   readonly entriesPage: Locator
   readonly pageStatus: Locator
   readonly searchBox : Locator
@@ -11,7 +11,7 @@ export class TablesPage {
   readonly sortableTable : Locator
   
   constructor(page: Page) {
-    this.page = page 
+    super(page)
     this.entriesPage = page.locator('select[class="dt-input"]')
     this.pageStatus = page.locator('div[class="dt-info"][role="status"]')
 

@@ -1,12 +1,12 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { PageBase } from "./pageBase"
 
-export class SlidersPage {
-  private readonly page:Page 
+export class SlidersPage extends PageBase {
   readonly sliderBox:Locator
   readonly sliderValue:Locator
 
   constructor(page:Page) {
-    this.page = page
+    super(page)
     this.sliderBox = page.locator('#slideMe')
     this.sliderValue =  page.locator('#value')
   }

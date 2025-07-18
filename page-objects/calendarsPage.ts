@@ -1,12 +1,12 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { PageBase } from "./pageBase"
 
-export class CalendarsPage {
-  private readonly page: Page
+export class CalendarsPage extends PageBase {
   readonly buttonToday: Locator
   readonly searchCalendar: Locator
   
   constructor(page:Page) {
-    this.page = page 
+    super(page)
     this.searchCalendar = page.locator('input[type="text"]').first()
     this.buttonToday = page.locator('div.dp-days button.dp-day-today')
   }

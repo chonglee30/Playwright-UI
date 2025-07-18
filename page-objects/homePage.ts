@@ -1,11 +1,9 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { PageBase } from "./pageBase"
 
-export class HomePage {
-  private readonly page: Page
-
+export class HomePage extends PageBase{
   constructor(page: Page) {
-    //super(page)
-    this.page = page
+    super(page)
   }
 
   async goToFormFieldsPage() {

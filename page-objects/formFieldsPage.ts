@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { PageBase } from "./pageBase"
 
-export class FormFieldsPage {
-  private readonly page:Page 
+export class FormFieldsPage extends PageBase{
   // Form Fields:
   readonly nameInput: Locator 
   readonly passwordInput: Locator
@@ -19,7 +19,7 @@ export class FormFieldsPage {
   readonly submitButton: Locator
 
   constructor(page:Page) {
-    this.page = page
+    super(page)
     // Form Fields:
     this.nameInput = page.getByLabel('Name').first()
     this.passwordInput = page.getByLabel('Password')
