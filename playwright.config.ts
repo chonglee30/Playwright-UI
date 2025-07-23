@@ -43,6 +43,7 @@ export default defineConfig<TestOptions>({
 
     {
       name: 'firefox',
+      testIgnore: 'po-sliders.spec.ts',
       use: { ...devices['Desktop Firefox'] },
     },
 

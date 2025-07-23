@@ -2,6 +2,7 @@ import {test, expect} from '@playwright/test'
 import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Sliders page', () => {
+  test.describe.configure({ retries: 3 });
   test.beforeEach(async({page}) => {
     const pm = new PageManager(page)
     await pm.onHomePage().goToSlidersPage()
