@@ -1,0 +1,11 @@
+version: '2.38.2'
+services:
+  playwright-test:
+    image: pw-ui-test
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command:  npx playwright test --project=chromium
+    volumes:
+      - ./playwright-report/:/app/playwright-report
+      - ./test-results/:/app/test-results
