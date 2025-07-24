@@ -19,7 +19,7 @@ jobs:
         docker compose version # Verify that 'docker compose' (v2) is available
     - name: Build and run Docker Compose
       run: |
-        docker-compose up --build --abort-on-container-exit
+        docker compose up --build --abort-on-container-exit
     #- uses: actions/upload-artifact@v4
     #  if: ${{ !cancelled() }}
     #  with:
