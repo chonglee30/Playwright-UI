@@ -12,14 +12,14 @@ jobs:
     - name: Checkout       
       uses: actions/checkout@v4      
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
     - name: Verify Docker Compose (optional, for debugging)
       run: |
         docker --version
         docker compose version # Verify that 'docker compose' (v2) is available
-    #- name: Build and run Docker Compose
-      #run: |
-      #  docker-compose up --build --abort-on-container-exit
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose up --build --abort-on-container-exit
     #- uses: actions/upload-artifact@v4
     #  if: ${{ !cancelled() }}
     #  with:
