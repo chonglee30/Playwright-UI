@@ -1,15 +1,12 @@
-import {test, expect} from '@playwright/test'
-import { PageManager } from '../page-objects/pageManager'
+import {test } from '../test-options'
 
 test.describe('Sliders page', () => {
   test.describe.configure({ retries: 3 });
-  test.beforeEach(async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onHomePage().goToSlidersPage()
+  test.beforeEach(async({pageManager}) => {
+    await pageManager.onHomePage().goToSlidersPage()
   })
 
-  test('Sliders Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onSlidersPage().checkSliderHorizontalDirection(500, '25', '40')
+  test('Sliders Test', async({pageManager}) => {
+    await pageManager.onSlidersPage().checkSliderHorizontalDirection(500, '25', '40')
   })
 })

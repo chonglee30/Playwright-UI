@@ -26,7 +26,7 @@ export const test = base.extend<TestOptions>({
     await use('')
   }, 
 
-  pageManager: async({page, formFieldsPage}, use) => {
+  pageManager: async({page}, use) => {
     const pm = new PageManager(page)
     await use(pm)
   }

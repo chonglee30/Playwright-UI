@@ -1,34 +1,27 @@
-import {test, expect} from '@playwright/test'
-import { PageManager } from '../page-objects/pageManager'
+import {test } from '../test-options'
 
 test.describe('Form Layouts page', () => {
-  test.beforeEach(async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onHomePage().goToFormFieldsPage()
+  test.beforeEach(async({pageManager}) => {
+    await pageManager.onHomePage().goToFormFieldsPage()
   })
 
-  test('Form Fields Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onFormFieldsPage().fillNamePassword('Michael Jordan', 'bulls23')
+  test('Form Fields Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().fillNamePassword('Michael Jordan', 'bulls23')
   })
 
-  test('Checkbox Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onFormFieldsPage().checkUncheckAllBoxes()
+  test('Checkbox Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().checkUncheckAllBoxes()
   })
 
-  test('Radiobox Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onFormFieldsPage().checSelectedRadioBox("Blue", "Yellow")
+  test('Radiobox Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().checSelectedRadioBox("Blue", "Yellow")
   })
 
-  test('Dropdown Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onFormFieldsPage().checkAutomationDropdownSelection('yes')
+  test('Dropdown Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().checkAutomationDropdownSelection('yes')
   })
 
-  test('Submit Form Test', async({page}) => {
-    const pm = new PageManager(page)
-    await pm.onFormFieldsPage().checkSubmitForm('jordan@test.com','last shot')
+  test('Submit Form Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().checkSubmitForm('jordan@test.com','last shot')
   })
 })
