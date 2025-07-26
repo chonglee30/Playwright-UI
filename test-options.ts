@@ -28,6 +28,7 @@ export const test = base.extend<TestOptions>({
 
   pageManager: async({page}, use) => {
     const pm = new PageManager(page)
+    pm.onHomePage().goToHomePage()
     await use(pm)
   }
 })
