@@ -24,16 +24,16 @@ Ex: if today's date is July 27th, then 27th is selected.
 **TC#2**: Table entries - check initial entries - 10 and 25 if 25 entries are selected.
 
 **dragDropIframe.spec.ts**
-**TC**: Drag and Drop - using locator and using more precision control with mouse 
+**TC**: Drag and Drop iframe Test: using locator and using more precision control with mouse 
 
 **Design Pattern** 
 <ins>POM (Page Object Model)</ins> with PageManager and Fixture 
-Test Codes                               PageObject Codes                      
-po-calendars.spec.ts                        homePage
+<ins>Test Codes</ins>                               <ins>PageObject Codes</ins>                      
+[po-calendars.spec.ts                       [homePage
 po-form-fields.spec.ts  <- PageManager <-   calendarsPage  <-  HelperBase
 po-sliders.spec.ts                          formFieldsPage
-po-tables.spec.ts                           slidersPage 
-                                            tablesPage
+po-tables.spec.ts]                          slidersPage 
+                                            tablesPage]
 
 **PageManager**: 
 between pageobject and tests
