@@ -5,8 +5,8 @@ Run: commandline: commandline: npx playwright test
 Github Action CI: Choose one of option: Chrome, Firefox, WebKit
 
 5 Test Spec Files:
-**po-calendars.spec.ts**: 
-- Ensure today's date is pre-selected.
+**po-calendars.spec.ts**:
+ - Ensure today's date is pre-selected. 
 Ex: if today's date is July 27th, then 27th is selected.
 
 **po-form-fields.spec.ts**: 
@@ -44,4 +44,5 @@ custom fixture file which include pageManager import and allocation so that no n
 
 CI/CD - github action 2 files and 2 jobs 
 **playwright.yml**: run tests any of three browsers: chrome, firefox, webkit.  User can select any of these browsers.  default - chrome. 
+
 **playwright-docker.yml**: run tests in the docker container all tests in chrome browser.
