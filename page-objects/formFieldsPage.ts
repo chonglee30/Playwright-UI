@@ -29,8 +29,8 @@ export class FormFieldsPage extends PageBase{
     this.automationDropdown = page.locator('#automation')
     this.allOptions = page.locator('select option')  
     // Submit Form 
-    this.emailTextBox  = page.locator('#email')
-    this.messageTextBox =  page.locator('#message')
+    this.emailTextBox  = page.getByLabel('Email').first()
+    this.messageTextBox = page.getByRole('textbox', {name:"Message"})
     this.submitButton = page.getByRole('button', {name: "Submit"})
   }
 
@@ -58,6 +58,7 @@ export class FormFieldsPage extends PageBase{
       await box.uncheck({force: true})
       expect(await box.isChecked()).toBeFalsy()
     }
+    await this.page.getByRole('checkbox', {name:"Coffee"}).check()
   }
 
   /**
