@@ -9,8 +9,12 @@ test.describe('Form Layouts page', () => {
     await pageManager.onFormFieldsPage().fillNamePassword('Michael Jordan', 'bulls23')
   })
 
-  test('Checkbox Test', async({pageManager}) => {
+  test('Checkbox - All Test', async({pageManager}) => {
     await pageManager.onFormFieldsPage().checkUncheckAllBoxes()
+  })
+
+  test('Checkbox selected checkbox Test', async({pageManager}) => {
+    await pageManager.onFormFieldsPage().checkTargetCheckbox("Coffee")
   })
 
   test('Radiobox Test', async({pageManager}) => {

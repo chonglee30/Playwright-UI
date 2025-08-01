@@ -61,6 +61,12 @@ export class FormFieldsPage extends PageBase{
     await this.page.getByRole('checkbox', {name:"Coffee"}).check()
   }
 
+  async checkTargetCheckbox(checkbox: string) {
+    const checkBox = this.page.getByRole('checkbox', {name:`${checkbox}`})
+    await checkBox.check()
+    await expect(checkBox).toBeChecked();
+  }
+
   /**
    * 
    * @param selectedRadioBox 

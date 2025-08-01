@@ -30,10 +30,12 @@ export class HomePage extends PageBase{
   // pageUrl: form-fields
   // pageTitle: Form Fields
   private async goToSelectedPage(pageUrl: string, pageTitle: string) {
-    await this.page.getByRole('link', { name: `${pageTitle}` }).click()
-    await this.page.waitForURL(`**/${pageUrl}/`)
-    // // Waits for the 'load' event, which means the entire page, including all resources (images, stylesheets, etc.), has finished loading.
-    await this.page.waitForLoadState('domcontentloaded');
+    const pageURLPromise = this.page.waitForURL(`**/${pageUrl}/`)
+    await Promise.all([
+      pageURLPromise,
+      this.page.getByRole('link', { name: `${pageTitle}` }).click()
+    ]);
+
     expect(this.page).toHaveTitle(`${pageTitle} | Practice Automation`);
     const header = await this.page.locator('h1').filter({hasText: `${pageTitle}`}).textContent()
     expect(header).toEqual(`${pageTitle}`)
