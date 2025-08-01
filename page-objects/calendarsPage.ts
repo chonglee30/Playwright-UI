@@ -14,6 +14,8 @@ export class CalendarsPage extends PageBase {
   async checkSelectedCalendarDates() {
     const today = new Date();
     await this.searchCalendar.click()
+    await this.page.waitForSelector('.dp-cal', { state: 'visible' });
+    await this.page.waitForSelector('.dp-cal-header', { state: 'visible' });
     expect(await this.buttonToday.textContent()).toEqual(today.getDate().toString())
   }
 }
