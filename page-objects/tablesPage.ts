@@ -9,6 +9,7 @@ export class TablesPage extends PageBase {
   readonly searchHeader: Locator
   readonly searchRow: Locator
   readonly sortableTable : Locator
+  readonly tableCountries: Locator
   
   constructor(page: Page) {
     super(page)
@@ -20,6 +21,7 @@ export class TablesPage extends PageBase {
     this.searchHeader = page.locator('table[id="tablepress-1"] thead tr th')
     this.searchRow = page.locator('table[id="tablepress-1"] tbody tr')
     this.sortableTable = page.locator('#sortable-table-countries-by-population')
+    this.tableCountries = page.locator('table tbody tr td.column-2')
   }
 
   /**
@@ -29,6 +31,7 @@ export class TablesPage extends PageBase {
    */
   async checkSortableTableSearch(searchCountry:string, numberOfRows:number) {
     expect(await this.sortableTable.textContent()).toEqual('Sortable Table')
+    this.searchBox.scrollIntoViewIfNeeded()
     await this.searchBox.clear()
     await this.searchBox.fill(searchCountry)
     await expect(this.searchBox).toHaveValue(searchCountry)
@@ -44,6 +47,7 @@ export class TablesPage extends PageBase {
    * @param numberOfRows 
    */
   async checkPaginationSortingTable(numberOfRows:number) {
+    this.pageStatus.scrollIntoViewIfNeeded()
     expect(await this.pageStatus.textContent()).toEqual('Showing 1 to 10 of 25 entries')
     await this.entriesPage.click()
     this.entriesPage.selectOption(numberOfRows.toString())
