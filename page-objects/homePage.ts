@@ -32,8 +32,8 @@ export class HomePage extends PageBase{
   private async goToSelectedPage(pageUrl: string, pageTitle: string) {
     const pageURLPromise = this.page.waitForURL(`**/${pageUrl}/`)
     await Promise.all([
-      pageURLPromise,
-      this.page.getByRole('link', { name: `${pageTitle}` }).click()
+      this.page.getByRole('link', { name: `${pageTitle}` }).click(),
+      pageURLPromise
     ]);
 
     expect(this.page).toHaveTitle(`${pageTitle} | Practice Automation`);

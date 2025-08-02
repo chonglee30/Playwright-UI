@@ -31,7 +31,7 @@ export class TablesPage extends PageBase {
    */
   async checkSortableTableSearch(searchCountry:string, numberOfRows:number) {
     expect(await this.sortableTable.textContent()).toEqual('Sortable Table')
-    this.searchBox.scrollIntoViewIfNeeded()
+    
     await this.searchBox.clear()
     await this.searchBox.fill(searchCountry)
     await expect(this.searchBox).toHaveValue(searchCountry)
@@ -47,7 +47,6 @@ export class TablesPage extends PageBase {
    * @param numberOfRows 
    */
   async checkPaginationSortingTable(numberOfRows:number) {
-    this.pageStatus.scrollIntoViewIfNeeded()
     expect(await this.pageStatus.textContent()).toEqual('Showing 1 to 10 of 25 entries')
     await this.entriesPage.click()
     this.entriesPage.selectOption(numberOfRows.toString())
