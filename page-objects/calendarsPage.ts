@@ -20,8 +20,8 @@ export class CalendarsPage extends PageBase {
       await this.page.waitForLoadState('load')
     ]);
 
-    await this.page.waitForSelector('.dp-cal', { state: 'visible' });
-    await this.page.waitForSelector('.dp-cal-header', { state: 'visible' });
+    const monthName = today.toLocaleString('default', { month: 'long' });
+    await expect(this.page.locator(`text=/.*${monthName}.*/`)).toBeVisible();
     expect(await this.buttonToday.textContent()).toEqual(today.getDate().toString())
   }
 }
