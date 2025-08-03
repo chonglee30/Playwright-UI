@@ -37,7 +37,7 @@ export default defineConfig<TestOptions>({
     globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
     viewport: { width: 1920, height: 1080 }, 
   },
 
