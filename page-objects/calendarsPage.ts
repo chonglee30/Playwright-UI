@@ -21,7 +21,9 @@ export class CalendarsPage extends PageBase {
     ]);
 
     const monthName = today.toLocaleString('default', { month: 'long' });
-    await expect(this.page.locator(`text=/.*${monthName}.*/`)).toBeVisible();
+    //await expect(this.page.locator(`text=/.*${monthName}.*/`)).toBeVisible();
+    await expect(this.page.getByText(monthName)).toBeVisible();
+
     await expect(this.page.locator('.dp-cal-header')).toBeVisible();
     expect(await this.buttonToday.textContent()).toEqual(today.getDate().toString())
   }
