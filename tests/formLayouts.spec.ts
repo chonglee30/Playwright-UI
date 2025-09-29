@@ -1,9 +1,18 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async({page}) => {
-  await page.goto('https://playground.bondaracademy.com/')
+// Allow both mobile web and desktop web to be tested
+test.beforeEach(async({page}, testInfo) => {
+  await page.goto('https://playground.bondaracademy.com',{ waitUntil: 'domcontentloaded' })
+  
+  if (testInfo.project.name === 'mobileWeb') {
+    await page.locator('.sidebar-toggle').waitFor({ state: 'attached' });
+    await page.locator('.sidebar-toggle').click()
+  }
   await page.getByRole('link', {name:'Forms'}).click()
   await page.getByRole('link', {name: 'Form Layouts'}).click()
+  if (testInfo.project.name === 'mobileWeb') {
+    await page.locator('.sidebar-toggle').click()
+  }
 })
 
 test.describe('Forms - Form Layouts', () => {

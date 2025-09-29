@@ -33,9 +33,11 @@ export default defineConfig<TestOptions>({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://practice-automation.com/',
+    baseURL: 'https://practice-automation.com/',  // https://practice-automation.com/
+                                                      // https://playground.bondaracademy.com 
+                                                      // https://commitquality.com/
     globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
-
+    
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     viewport: { width: 1920, height: 1080 }, 
@@ -58,6 +60,14 @@ export default defineConfig<TestOptions>({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+    {
+      name: 'mobileWeb',
+      testMatch: ['formLayouts.spec.ts'],
+      use: {
+        ...devices['iPhone 15 Pro Max']
+      }
+    }
+
 
     /* Test against mobile viewports. */
     // {
