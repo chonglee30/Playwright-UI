@@ -51,20 +51,20 @@ export default defineConfig<TestOptions>({
     },
 
     {
-      name: 'firefox',
+      name: 'regression-firefox',
       testIgnore: 'po-sliders.spec.ts',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
-      name: 'webkit',
+      name: 'regression-webkit',
       use: { ...devices['Desktop Safari'] },
     },
     {
-      name: 'mobileWeb',
+      name: 'regression-mobileWeb',
       testMatch: ['formLayouts.spec.ts'],
       use: {
-        ...devices['iPhone 15 Pro Max']
+        ...devices['iPhone 15 Pro Max'] 
       }
     }
 

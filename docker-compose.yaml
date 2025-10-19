@@ -5,7 +5,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command:  npx playwright test --project=chromium
+    # Use the environment variable to define the command
+    # This variable is passed from the Github Action workflow  
+    command: ${PW_COMMAND_FILTER} 
     volumes:
       - ./playwright-report/:/app/playwright-report
       - ./test-results/:/app/test-results
