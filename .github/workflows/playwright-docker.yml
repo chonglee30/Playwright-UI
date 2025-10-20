@@ -34,7 +34,7 @@ jobs:
           echo "PW_COMMAND_FILTER=npx playwright test --grep /(^chromium$|regression-)/" >> $GITHUB_ENV 
         else 
           # PUSH run: run only chromium project
-          echo "PW_COMMAND_FILTER=npx playwright test --grep /^chromium$/" >> $GITHUB_ENV 
+          echo "PW_COMMAND_FILTER=npx playwright test --project=chromium" >> $GITHUB_ENV 
         fi       
     - name: Build and run Docker Compose
       run: |

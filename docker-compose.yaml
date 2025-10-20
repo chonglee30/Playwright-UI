@@ -6,8 +6,11 @@ services:
       context: .
       dockerfile: ./Dockerfile
     # Use the environment variable to define the command
-    # This variable is passed from the Github Action workflow  
-    command: ${PW_COMMAND_FILTER} 
+    # This variable is passed from the Github Action workflow 
+    environmenet: 
+    MY_HOST_FILTER: ${PW_COMMAND_FILTER}
+    command: /bin/sh -c "echo 'Container Environment value: $$MY_HOST_FILTER' && sleep 5"
+    command: npx playwright test --project=chromium 
     volumes:
       - ./playwright-report/:/app/playwright-report
       - ./test-results/:/app/test-results
