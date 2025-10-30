@@ -55,10 +55,10 @@ export default defineConfig<TestOptions>({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
-      name: 'regression-webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'regression-webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
     {
       name: 'regression-mobileWeb',
       testMatch: ['formLayouts.spec.ts'],

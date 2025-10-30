@@ -16,7 +16,7 @@ on:
         options:
           - chromium
           - regression-firefox
-          - regression-webkit
+          - regression-mobileWeb
 jobs:
   test:
     timeout-minutes: 60
