@@ -4,7 +4,7 @@ on:
       branches: [ main, master ]
     pull_request:
       branches: [ main, master ]
-    # Trigger nightly at 18:00 UTC (equivalent to 1 AM Pacific time)
+    # Trigger nightly at 8:00 UTC (equivalent to 1 AM Pacific time)
     schedule:
       - cron: '0 8 * * *'     
 jobs:

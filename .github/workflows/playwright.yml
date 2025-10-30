@@ -4,6 +4,9 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  # Trigger nightly at 9:00 UTC (equivalent to 2 AM Pacific time)
+  schedule:
+    - cron: '0 9 * * *'       
   workflow_dispatch:
     inputs:
       browser:
@@ -28,7 +31,12 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps --force
     - name: Run Playwright tests
-      run: npx playwright test --project ${{ github.event.inputs.browser || 'chromium' }}
+      run: |
+        if [[ "${{ github.event_name }}" == "schedule" ]]; then
+          npx playwright test
+        else       
+          npx playwright test --project ${{ github.event.inputs.browser || 'chromium' }}
+        fi
     - uses: actions/upload-artifact@v4
       if: always()
       with:
