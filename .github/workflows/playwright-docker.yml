@@ -24,24 +24,20 @@ jobs:
       run: |
          echo "Current time in UTC: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
          echo "Current time in PDT: $(TZ='America/Los_Angeles' date '+%Y-%m-%d %H:%M:%S PDT')"
-    - name: Set Playwright Command Filter
-      id: filter_step
+    - name: Determine Playwright Project Name
+      id: set_project_name
       run: |
         # 1. Check the event name
         if [[ "${{ github.event_name }}" == "schedule" ]]; then
-          # Schedule run: Run chromium AND all projects starting with regression prefix
-          # Playwright uses --grep for project filtering
-          echo "PW_COMMAND_FILTER=npx playwright test --grep /(^chromium$|regression-)/" >> $GITHUB_ENV 
+          echo "PROJECT_NAME=" >> $GITHUB_ENV
+          echo "Running all projects for nightly schedule running event" 
         else 
-          # PUSH run: run only chromium project
-          echo "PW_COMMAND_FILTER=npx playwright test --project=chromium" >> $GITHUB_ENV 
+          echo "PROJECT_NAME=--project=chromium" >> $GITHUB_ENV 
+          echo "Running with only chromium project"
         fi       
     - name: Build and run Docker Compose
       run: |
-        docker compose up --build --abort-on-container-exit
-      env:
-        # PW_COMMAND_FILTER variable available to Docker Compose 
-        PW_COMMAND_FILTER: ${{ env.PW_COMMAND_FILTER }}  
+        docker compose up --build --abort-on-container-exit 
     - uses: actions/upload-artifact@v4
       if: always()
       with:

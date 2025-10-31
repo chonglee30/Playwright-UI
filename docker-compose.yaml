@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: npx playwright test --project=chromium 
+    command: npx playwright test ${PROJECT_NAME}
     volumes:
       - ./playwright-report/:/app/playwright-report
       - ./test-results/:/app/test-results
