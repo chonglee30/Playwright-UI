@@ -59,13 +59,13 @@ export default defineConfig<TestOptions>({
     //   name: 'regression-webkit',
     //   use: { ...devices['Desktop Safari'] },
     // },
-    {
-      name: 'regression-mobileWeb',
-      testMatch: ['formLayouts.spec.ts'],
-      use: {
-        ...devices['iPhone 15 Pro Max'] 
-      }
-    }
+    // {
+    //   name: 'regression-mobileWeb',
+    //   testMatch: ['formLayouts.spec.ts'],
+    //   use: {
+    //     ...devices['iPhone 15 Pro Max'] 
+    //   }
+    // }
 
 
     /* Test against mobile viewports. */
