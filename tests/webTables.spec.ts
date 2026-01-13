@@ -180,14 +180,13 @@ test.describe('Smart Table - Sorting', () => {
     })
 
     const ageBefore = await tableRows.first().locator('td:last-child').textContent()
-    
     // B. Descending:
     await ageColumnHeader.click()
     await tableRows.first().waitFor();
 
     await expect(async () => {
       const ageAfter = await tableRows.first().locator('td:last-child').textContent()
-    
+
       // If the text is still exactly the same as before the click, 
       // throw an error to trigger a retry.
       if (ageBefore === ageAfter) {
@@ -208,6 +207,50 @@ test.describe('Smart Table - Sorting', () => {
       intervals: [500, 1000, 2000],
       timeout: 10000
     })
+  })
+
+  test('Verify Sorting Table Row with Refactor code', async ({ page }) => {
+    // 1. Centralized Locators
+    const tableRows = page.locator('table tbody tr');
+    const ageHeader = page.locator('table thead tr:first-child th:has-text("Age") a');
+
+    /**
+     * Helper: Extracts ages from the current table state
+     */
+    const getTableAges = async () => {
+      return await tableRows.evaluateAll(rows =>
+        rows.map(row => parseInt(row.children[6]?.textContent || '0'))
+      );
+    };
+
+    /**
+   * Helper: Clicks and waits for the table to sort in a specific order
+   */
+    const assertSort = async (direction: 'asc' | 'desc') => {
+      // Capture state before click to detect when the table actually updates
+      const firstRowBefore = await tableRows.first().innerText();
+
+      await ageHeader.click();
+
+      await expect(async () => {
+        const firstRowAfter = await tableRows.first().innerText();
+        if (firstRowBefore === firstRowAfter) throw new Error('Table data not yet updated');
+
+        const ages = await getTableAges();
+        const expected = [...ages].sort((a, b) => direction === 'asc' ? a - b : b - a);
+
+        expect(ages).toEqual(expected);
+      }).toPass({ intervals: [500, 1000], timeout: 10000 });
+    };
+
+    // --- Test Execution ---
+    await expect(ageHeader).toBeVisible();
+
+    // Test Ascending
+    await assertSort('asc');
+
+    // Test Descending
+    await assertSort('desc');
 
   })
 })
