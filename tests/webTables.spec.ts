@@ -75,7 +75,7 @@ test.describe('Smart Table - User Age Drinking Test', () => {
   test('Verify Illegal Drinking Ages - querySelectorAll', async ({ page }) => {
     const tableRows = page.getByRole('table').locator('tbody tr')
     await tableRows.first().waitFor();
-        
+
     const userReport = await tableRows.evaluateAll((rows) =>
       rows.map(row => {
         const columns = row.querySelectorAll('td');
@@ -84,8 +84,8 @@ test.describe('Smart Table - User Age Drinking Test', () => {
           age: parseInt((columns[6] as HTMLElement).innerText)
         };
       })
-      .filter(user => user.age < 21)
-    ); 
+        .filter(user => user.age < 21)
+    );
     userReport.forEach(report => expect(report.age).toBeLessThan(21))
   });
 
@@ -99,8 +99,8 @@ test.describe('Smart Table - User Age Drinking Test', () => {
           age: parseInt((row.querySelector('td:nth-child(7)') as HTMLElement).innerText)
         };
       })
-      .filter(user => user.age < 21)
-    ); 
+        .filter(user => user.age < 21)
+    );
     userReport.forEach(report => expect(report.age).toBeLessThan(21))
   });
 
@@ -112,17 +112,102 @@ test.describe('Smart Table - User Age Drinking Test', () => {
     for (const row of arrayRows) {
       const cells = row.getByRole('cell');
       const cellTexts = await cells.allInnerTexts();
-      const user: any ={}
+      const user: any = {}
       user.username = await cells.nth(4).textContent()
-      user.age = parseInt(await cells.nth(6).textContent() as string) 
+      user.age = parseInt(await cells.nth(6).textContent() as string)
       userReport.push(user)
     }
 
-    const underAgeUsers = userReport.filter(user => user.age <21)
-                .map(({ username, age }) => `${username} is not eligible to drink at the age of ${age}` )
+    const underAgeUsers = userReport.filter(user => user.age < 21)
+      .map(({ username, age }) => `${username} is not eligible to drink at the age of ${age}`)
 
-    console.log('--- User Illegal Drinking Age Report ---')            
-    underAgeUsers.forEach((agentUser) => console.log(agentUser))            
+    console.log('--- User Illegal Drinking Age Report ---')
+    underAgeUsers.forEach((agentUser) => console.log(agentUser))
   });
 
 });
+
+test.describe('Smart Table - Sorting', () => {
+  test('Verify Sorting Table Row by Age Asending Order', async ({ page }) => {
+    const tableLabelHeaders = page.getByRole('table').locator('thead tr').first()
+    const ageColumnHeader = tableLabelHeaders.locator('th:last-child a').filter({ hasText: 'Age' })
+    await expect(ageColumnHeader).toBeVisible();
+    await ageColumnHeader.click()
+
+    await expect(async () => {
+      const tableRows = page.getByRole('table').locator('tbody tr')
+      await expect(tableRows.first()).toBeVisible();
+
+      const users = await tableRows.evaluateAll((rows) => {
+        return rows.map(row => ({
+          firstname: row.children[2].textContent,
+          age: parseInt(row.children[6].textContent)
+        }))
+      })
+
+      const ages = users.map(user => user.age)
+      const sortedAges = [...ages].sort((a, b) => a - b);
+      expect(ages).toEqual(sortedAges);
+    }).toPass({
+      intervals: [500, 1000, 2000],
+      timeout: 10000
+    })
+  })
+  test('Verify Sorting Table Row by Age Asending and Descending Order - simpler locator', async ({ page }) => {
+    const ageColumnHeader = page.locator('table thead tr:first-child th:has-text("Age") a');
+    await expect(ageColumnHeader).toBeVisible();
+
+    // Asending
+    await ageColumnHeader.click()
+    const tableRows = page.getByRole('table').locator('tbody tr')
+    await tableRows.first().waitFor();
+
+    await expect(async () => {
+      const users = await tableRows.evaluateAll((rows) => {
+        return rows.map(row => ({
+          firstname: row.children[2].textContent,
+          age: parseInt(row.children[6].textContent)
+        }))
+      })
+
+      const ages = users.map(user => user.age)
+      const sortedAges = [...ages].sort((a, b) => a - b);
+      expect(ages).toEqual(sortedAges);
+
+    }).toPass({
+      intervals: [500, 1000, 2000],
+      timeout: 10000
+    })
+
+    const ageBefore = await tableRows.first().locator('td:last-child').textContent()
+    
+    // B. Descending:
+    await ageColumnHeader.click()
+    await tableRows.first().waitFor();
+
+    await expect(async () => {
+      const ageAfter = await tableRows.first().locator('td:last-child').textContent()
+    
+      // If the text is still exactly the same as before the click, 
+      // throw an error to trigger a retry.
+      if (ageBefore === ageAfter) {
+        throw new Error('Table has not updated yet as same age');
+      }
+
+      const usersDesc = await tableRows.evaluateAll((rows) => {
+        return rows.map(row => ({
+          firstname: row.children[2].textContent,
+          age: parseInt(row.children[6].textContent)
+        }))
+      })
+
+      const agesDesc = usersDesc.map(user => user.age)
+      const sortedDescAges = [...agesDesc].sort((a, b) => b - a);
+      expect(agesDesc).toEqual(sortedDescAges);
+    }).toPass({
+      intervals: [500, 1000, 2000],
+      timeout: 10000
+    })
+
+  })
+})
