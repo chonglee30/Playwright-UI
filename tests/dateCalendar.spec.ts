@@ -30,7 +30,7 @@ test.describe('Date Picker', () => {
     await expect(calendarDateField).toHaveValue(shortMonthDateToAssert)
   });
 
-  test('Assert Right Calendar Dates', async ({ page }) => {
+  test('Assert Right Calendar Dates After Today', async ({ page }) => {
     const calendarDateField = page.getByPlaceholder('Form Picker')
     await calendarDateField.click()
 
@@ -38,10 +38,19 @@ test.describe('Date Picker', () => {
     await expect(calendarDateField).toHaveValue(expectedCalDate)
   });
 
+  test('Assert Calendar Dates Before Today', async ({ page }) => {
+    const calendarDateField = page.getByPlaceholder('Form Picker')
+    await calendarDateField.click()
+
+    const expectedCalDate = await selectDateCalendar(page, -550);
+    await expect(calendarDateField).toHaveValue(expectedCalDate)
+  });
+
 })
 
 async function selectDateCalendar(page: Page, numDaysFromToday: number): Promise<string> {
   let date = new Date()
+  const todayDate = date.toISOString().split('T')[0];
   date.setDate(date.getDate() + numDaysFromToday)
 
   const expectedShortMonth = date.toLocaleString('En-US', { month: 'short' })
@@ -52,10 +61,13 @@ async function selectDateCalendar(page: Page, numDaysFromToday: number): Promise
   const expectedCalDate = `${expectedShortMonth} ${expectedDate}, ${expectedYear}`
   const expectedMonthYear = ` ${expectedLongMonth} ${expectedYear} `
   let currentMonthYear = await page.locator('nb-calendar-view-mode').textContent()
-  console.log('Expected Month and Year: ' + expectedMonthYear)
+
+  const targetDate = new Date(expectedCalDate).toISOString().split('T')[0];
 
   while (!currentMonthYear?.includes(expectedMonthYear)) {
-    await page.locator('nb-calendar-pageable-navigation [data-name="chevron-right"]').click()
+    const direction = targetDate > todayDate ? 'next' : 'prev';
+    const selector = direction === 'next' ? 'chevron-right' : 'chevron-left';
+    await page.locator(`nb-calendar-pageable-navigation [data-name="${selector}"]`).click();
     currentMonthYear = await page.locator('nb-calendar-view-mode').textContent()
     console.log('Current: ' + currentMonthYear)
   }
